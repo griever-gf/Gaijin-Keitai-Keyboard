@@ -16,8 +16,6 @@
 
 package com.example.android.gaijinkeitaiboard;
 
-import com.example.android.softkeyboard.R;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
@@ -25,6 +23,7 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.Keyboard.Key;
 import android.inputmethodservice.Keyboard.Row;
 import android.view.inputmethod.EditorInfo;
+import com.daicon.griever.gaijinkeitaiboard.R;
 
 public class LatinKeyboard extends Keyboard {
 

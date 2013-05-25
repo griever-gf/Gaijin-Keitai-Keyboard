@@ -28,11 +28,10 @@ import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
+import com.daicon.griever.gaijinkeitaiboard.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.android.softkeyboard.R;
 
 /**
  * Example of writing an input method for a soft keyboard.  This code is
@@ -603,6 +602,7 @@ public class SoftKeyboard extends InputMethodService
                 primaryCode = Character.toUpperCase(primaryCode);
             }
         }
+        android.os.Debug.waitForDebugger();
         if (isAlphabet(primaryCode) && mPredictionOn) {
             mComposing.append((char) primaryCode);
             getCurrentInputConnection().setComposingText(mComposing, 1);

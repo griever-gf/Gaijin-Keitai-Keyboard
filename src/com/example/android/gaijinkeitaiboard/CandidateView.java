@@ -25,11 +25,10 @@ import android.graphics.drawable.Drawable;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import com.daicon.griever.gaijinkeitaiboard.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.android.softkeyboard.R;
 
 public class CandidateView extends View {
 

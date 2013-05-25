@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" 
-        package="com.daicon.griever.gaijinkeitaiboard"> 
+        package="com.daicon.griever.gaijinkeitaiboard" android:minSdkVersion="8"> 
     <application android:label="@string/ime_name">
         <service android:name="GaijinKeitaiKeyboard"
                 android:permission="android.permission.BIND_INPUT_METHOD">

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.example.android.gaijinkeitaiboard;
+package com.daicon.griever.gaijinkeitaiboard;
 
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;

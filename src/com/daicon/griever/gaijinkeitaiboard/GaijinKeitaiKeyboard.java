@@ -18,7 +18,6 @@ package com.daicon.griever.gaijinkeitaiboard;
 
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 //import android.text.method.MetaKeyKeyListener;
 import android.text.method.MultiTapKeyListener;
 import android.util.Log;
@@ -43,7 +42,7 @@ import java.util.List;
  */
 public class GaijinKeitaiKeyboard extends InputMethodService {
     
-    private StringBuilder mComposing = new StringBuilder();
+    //private StringBuilder mComposing = new StringBuilder();
     private boolean mCapsLock;
     private long mLastShiftTime;
     private long mMetaState;
@@ -52,7 +51,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     //private LatinKeyboard mSymbolsShiftedKeyboard;
     //private LatinKeyboard mQwertyKeyboard;
     
-    //private LatinKeyboard mCurKeyboard;
+    //private LatinKeyboard mCurKeyboard;/
     
     private String mWordSeparators;
     
@@ -78,7 +77,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         
         // Reset our state.  We want to do this even if restarting, because
         // the underlying state of the text editor could have changed in any way.
-        mComposing.setLength(0);
+        //mComposing.setLength(0);
         //updateCandidates();
         
         if (!restarting) {
@@ -168,7 +167,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         super.onFinishInput();
         
         // Clear current composing text and candidates.
-        mComposing.setLength(0);
+        //mComposing.setLength(0);
         //updateCandidates();
         
         // We only hide the candidates window when finishing input on
@@ -235,43 +234,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         }
     }*/
     
-    /**
-     * This translates incoming hard key events in to edit operations on an
-     * InputConnection.  It is only needed when using the
-     * PROCESS_HARD_KEYS option.
-     */
-    private boolean translateKeyDown(int keyCode, KeyEvent event) {
-    	mMetaState = MultiTapKeyListener.handleKeyDown(mMetaState,keyCode, event);
-    	int c = event.getUnicodeChar(MultiTapKeyListener.getMetaState(mMetaState)); //0 if inactive, 1 if active, 2 if locked.
-        mMetaState = MultiTapKeyListener.adjustMetaAfterKeypress(mMetaState);
-        
-        InputConnection ic = getCurrentInputConnection();
-        if (c == 0 || ic == null) {
-            return false;
-        }
-        
-        boolean dead = false;
-
-        if ((c & KeyCharacterMap.COMBINING_ACCENT) != 0) {
-            dead = true;
-            c = c & KeyCharacterMap.COMBINING_ACCENT_MASK;
-        }
-        
-        if (mComposing.length() > 0) {
-            char accent = mComposing.charAt(mComposing.length() -1 );
-            int composed = KeyEvent.getDeadChar(accent, c);
-
-            if (composed != 0) {
-                c = composed;
-                mComposing.setLength(mComposing.length()-1);
-            }
-        }
-        
-        onKey(c, null);
-        
-        return true;
-    }
-    
+   
     /**
      * Use this to monitor key events being delivered to the application.
      * We get first crack at them, and can either resume them or let them
@@ -295,10 +258,10 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                 // Special handling of the delete key: if we currently are
                 // composing text for the user, we want to modify that instead
                 // of let the application to the delete itself.
-                if (mComposing.length() > 0) {
-                    onKey(Keyboard.KEYCODE_DELETE, null);
-                    return true;
-                }
+                //if (mComposing.length() > 0) {
+                    //onKey(Keyboard.KEYCODE_DELETE, null);
+                    //return true;
+                //}
                 break;
                 
             case KeyEvent.KEYCODE_ENTER:
@@ -309,7 +272,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                 // For all other keys, if we want to do transformations on
                 // text being entered with a hard keyboard, we need to process
                 // it and do the appropriate action.
-                    if (keyCode == KeyEvent.KEYCODE_SPACE
+                    /*if (keyCode == KeyEvent.KEYCODE_SPACE
                             && (event.getMetaState()&KeyEvent.META_ALT_ON) != 0) {
                         // A silly example: in our input method, Alt+Space
                         // is a shortcut for 'android' in lower case.
@@ -328,7 +291,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                             // And we consume this event.
                             return true;
                         }
-                    }
+                    }*/
                     if (
                     		//mPredictionOn &&
                     		translateKeyDown(keyCode, event)) {
@@ -338,6 +301,98 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         
         return super.onKeyDown(keyCode, event);
     }
+    
+    /**
+     * This translates incoming hard key events in to edit operations on an
+     * InputConnection.   */
+    private boolean translateKeyDown(int keyCode, KeyEvent event) {
+    	mMetaState = MultiTapKeyListener.handleKeyDown(mMetaState,keyCode, event);
+    	int c = event.getUnicodeChar(MultiTapKeyListener.getMetaState(mMetaState)); //0 if inactive, 1 if active, 2 if locked.
+        mMetaState = MultiTapKeyListener.adjustMetaAfterKeypress(mMetaState);
+        
+        InputConnection ic = getCurrentInputConnection(); 
+        //if no input connection or char code is 0
+        if (c == 0 || ic == null) {
+            return false;
+        }
+        
+        boolean dead = false;
+        //dead key check
+        if ((c & KeyCharacterMap.COMBINING_ACCENT) != 0) {
+            dead = true;
+            c = c & KeyCharacterMap.COMBINING_ACCENT_MASK;
+        }
+        
+        /*if (mComposing.length() > 0) {
+            char accent = mComposing.charAt(mComposing.length() -1 );
+            int composed = KeyEvent.getDeadChar(accent, c);
+
+            if (composed != 0) {
+                c = composed;
+                mComposing.setLength(mComposing.length()-1);
+            }
+        }*/
+        onKey(c, null);
+        return true;
+    }
+    
+    public void onKey(int primaryCode, int[] keyCodes) {
+        if (isWordSeparator(primaryCode)) {
+            // Handle separator
+            //if (mComposing.length() > 0) {
+                //commitTyped(getCurrentInputConnection());
+            //}
+            sendKey(primaryCode);
+            updateShiftKeyState(getCurrentInputEditorInfo());
+        } else if (primaryCode == Keyboard.KEYCODE_DELETE) {
+            handleBackspace();
+        } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
+            handleShift();
+        } else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
+            handleClose();
+            return;
+        //} else if (primaryCode == LatinKeyboardView.KEYCODE_OPTIONS) {
+            // Show a menu or somethin'
+        //}
+        //else
+        	//if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE
+                //&& mInputView != null
+                //) {
+            //Keyboard current = mInputView.getKeyboard();
+            //if (current == mSymbolsKeyboard || current == mSymbolsShiftedKeyboard) {
+                //current = mQwertyKeyboard;
+            //} else {
+                //current = mSymbolsKeyboard;
+            //}
+            //mInputView.setKeyboard(current);
+            //if (current == mSymbolsKeyboard) {
+                //current.setShifted(false);
+            //}
+        } else {
+            handleCharacter(primaryCode, keyCodes);
+        }
+    }
+    
+    private void handleCharacter(int primaryCode, int[] keyCodes) {
+        if (isInputViewShown()) {
+            //if (mInputView.isShifted())
+            {
+                primaryCode = Character.toUpperCase(primaryCode);
+            }
+        }
+        android.os.Debug.waitForDebugger();
+        /*if (isAlphabet(primaryCode) && mPredictionOn) {
+            mComposing.append((char) primaryCode);
+            getCurrentInputConnection().setComposingText(mComposing, 1);
+            updateShiftKeyState(getCurrentInputEditorInfo());
+            //updateCandidates();
+        } else*/ 
+        {
+            getCurrentInputConnection().commitText(
+                    String.valueOf((char) primaryCode), 1);
+        }
+    }
+
 
     /**
      * Use this to monitor key events being delivered to the application.
@@ -361,13 +416,13 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     /**
      * Helper function to commit any text being composed in to the editor.
      */
-    private void commitTyped(InputConnection inputConnection) {
+    /*private void commitTyped(InputConnection inputConnection) {
         if (mComposing.length() > 0) {
             inputConnection.commitText(mComposing, mComposing.length());
             mComposing.setLength(0);
             //updateCandidates();
         }
-    }
+    }*/
 
     /**
      * Helper to update the shift state of our keyboard based on the initial
@@ -425,47 +480,8 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                 break;
         }
     }
-
-    // Implementation of KeyboardViewListener
-
-    public void onKey(int primaryCode, int[] keyCodes) {
-        if (isWordSeparator(primaryCode)) {
-            // Handle separator
-            if (mComposing.length() > 0) {
-                commitTyped(getCurrentInputConnection());
-            }
-            sendKey(primaryCode);
-            updateShiftKeyState(getCurrentInputEditorInfo());
-        } else if (primaryCode == Keyboard.KEYCODE_DELETE) {
-            handleBackspace();
-        } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
-            handleShift();
-        } else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
-            handleClose();
-            return;
-        //} else if (primaryCode == LatinKeyboardView.KEYCODE_OPTIONS) {
-            // Show a menu or somethin'
-        //}
-        //else
-        	//if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE
-                //&& mInputView != null
-                //) {
-            //Keyboard current = mInputView.getKeyboard();
-            //if (current == mSymbolsKeyboard || current == mSymbolsShiftedKeyboard) {
-                //current = mQwertyKeyboard;
-            //} else {
-                //current = mSymbolsKeyboard;
-            //}
-            //mInputView.setKeyboard(current);
-            //if (current == mSymbolsKeyboard) {
-                //current.setShifted(false);
-            //}
-        } else {
-            handleCharacter(primaryCode, keyCodes);
-        }
-    }
-
-    public void onText(CharSequence text) {
+    
+    /*public void onText(CharSequence text) {
         InputConnection ic = getCurrentInputConnection();
         if (ic == null) return;
         ic.beginBatchEdit();
@@ -475,7 +491,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         ic.commitText(text, 0);
         ic.endBatchEdit();
         updateShiftKeyState(getCurrentInputEditorInfo());
-    }
+    }*/
 
     /**
      * Update the list of available candidates from the current composing
@@ -507,7 +523,15 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     }*/
     
     private void handleBackspace() {
-        final int length = mComposing.length();
+    	final int length = getCurrentInputConnection().getTextBeforeCursor(1, 0).length();
+    	if (length > 0) {
+            //getCurrentInputConnection().commitText();
+            //updateCandidates();
+    		getCurrentInputConnection().deleteSurroundingText(1, 0);
+        } else {
+            keyDownUp(KeyEvent.KEYCODE_DEL);
+        }
+        /*final int length = mComposing.length();
         if (length > 1) {
             mComposing.delete(length - 1, length);
             getCurrentInputConnection().setComposingText(mComposing, 1);
@@ -518,7 +542,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
             //updateCandidates();
         } else {
             keyDownUp(KeyEvent.KEYCODE_DEL);
-        }
+        }*/
         updateShiftKeyState(getCurrentInputEditorInfo());
     }
 
@@ -542,29 +566,10 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
             mSymbolsKeyboard.setShifted(false);
         }*/
     }
-    
-    private void handleCharacter(int primaryCode, int[] keyCodes) {
-        if (isInputViewShown()) {
-            //if (mInputView.isShifted())
-            {
-                primaryCode = Character.toUpperCase(primaryCode);
-            }
-        }
-        android.os.Debug.waitForDebugger();
-        /*if (isAlphabet(primaryCode) && mPredictionOn) {
-            mComposing.append((char) primaryCode);
-            getCurrentInputConnection().setComposingText(mComposing, 1);
-            updateShiftKeyState(getCurrentInputEditorInfo());
-            //updateCandidates();
-        } else*/ 
-        {
-            getCurrentInputConnection().commitText(
-                    String.valueOf((char) primaryCode), 1);
-        }
-    }
+   
 
     private void handleClose() {
-        commitTyped(getCurrentInputConnection());
+        //commitTyped(getCurrentInputConnection());
         requestHideSelf(0);
         //mInputView.closing();
     }
@@ -616,11 +621,11 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     }
     
     public void swipeLeft() {
-        handleBackspace();
+        //handleBackspace();
     }
 
     public void swipeDown() {
-        handleClose();
+        //handleClose();
     }
 
     public void swipeUp() {

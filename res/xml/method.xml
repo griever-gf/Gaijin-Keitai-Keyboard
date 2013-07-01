@@ -20,4 +20,19 @@
 <!-- The attributes in this XML file provide configuration information -->
 <!-- for the Search Manager. -->
 
-<input-method xmlns:android="http://schemas.android.com/apk/res/android" />
+<!-- <input-method xmlns:android="http://schemas.android.com/apk/res/android" -->
+<input-method xmlns:android="http://schemas.android.com/apk/lib/com.daicon.griever.gaijinkeitaikeyboard"
+ android:settingsActivity="com.daicon.griever.gaijinkeitaiboard.Settings" android:icon="@drawable/lang_icon">
+<subtype android:name="@string/display_name_english_keyboard_ime"
+            android:icon="@drawable/lang_icon_en"
+            android:imeSubtypeLanguage="en_US"
+            android:imeSubtypeMode="keyboard"
+            android:imeSubtypeExtraValue="somePrivateOption=true"
+    />
+    <subtype android:name="@string/display_name_russian_keyboard_ime"
+            android:icon="@drawable/lang_icon_ru"
+            android:imeSubtypeLanguage="ru_RU"
+            android:imeSubtypeMode="keyboard"
+            android:imeSubtypeExtraValue="foobar=30,someInternalOption=false"
+    />
+</input-method >

@@ -28,4 +28,7 @@
     <string name="label_go_key">Go</string>
     <string name="label_next_key">Next</string>
     <string name="label_send_key">Send</string>
+	
+	<string name="display_name_english_keyboard_ime">G-Klava</string>
+	<string name="display_name_russian_keyboard_ime">%s</string>
 </resources>

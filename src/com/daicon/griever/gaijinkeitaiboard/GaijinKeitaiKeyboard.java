@@ -28,6 +28,20 @@ import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
+import android.os.Handler;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.app.PendingIntent;
+import android.content.Intent;
+//import android.os.Bundle;
+//import android.app.Activity;
+//import android.support.v4.app.NotificationCompat.Builder;
+import android.app.PendingIntent;
+
+
+
 import com.daicon.griever.gaijinkeitaiboard.R;
 
 import java.util.ArrayList;
@@ -47,6 +61,26 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     private long mLastShiftTime;
     private long mMetaState;
     
+    char[][] lang_rus = new char[][]{
+    		  { ' ', '0', '+', '-', '_' },
+    		  { '.', ',', '1', '?', '!', '@', '#', '$', '%', '^', '&', '*', ':', '/', '\'', '=', '(', ')' },
+    		  { 'à', 'á', 'â', 'ã', '2', 'A', 'Á', 'Â', 'Ã' },
+    		  { 'ä', 'å', '¸', 'æ', 'ç', '3', 'Ä', 'Å', '¨', 'Æ', 'Ç',},
+    		  { 'è', 'é', 'ê', 'ë', '4'},
+    		  { 'ì', 'í', 'î', 'ï', '5'},
+    		  { 'ð', 'ñ', 'ò', 'ó', '6'},
+    		  { 'ô', 'õ', 'ö', '÷', '7'},
+    		  { 'ø', 'ù', 'ú', 'û', '8'},
+    		  { 'ü', 'ý', 'þ', 'ÿ', '9'},
+    		  { '*' },
+    		  { '#' }
+    		};
+    
+    private int currentKeyCharIndex;
+    private int lastKeyCode;
+    
+    private Handler mHandler;
+    
     //private LatinKeyboard mSymbolsKeyboard;
     //private LatinKeyboard mSymbolsShiftedKeyboard;
     //private LatinKeyboard mQwertyKeyboard;
@@ -63,6 +97,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         super.onCreate();
         android.os.Debug.waitForDebugger();  // DEBUG MODE
         mWordSeparators = getResources().getString(R.string.word_separators);
+        mHandler = new Handler();
     }
     
     
@@ -79,6 +114,8 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         // the underlying state of the text editor could have changed in any way.
         //mComposing.setLength(0);
         //updateCandidates();
+        currentKeyCharIndex = 0;
+        lastKeyCode = 0;
         
         if (!restarting) {
             // Clear shift states.
@@ -154,6 +191,42 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                 updateShiftKeyState(attribute);
         }
         
+        //---get the notification ID for the notification; 
+        // passed in by the MainActivity---
+        
+         
+        //Notification notif = new Notification( R.drawable.lang_icon_ru,  "Time's up!", System.currentTimeMillis());
+        //should add custom tag later
+        //nm.notify(99, notif);
+        try
+        {
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Intent notificationIntent = new Intent(this, GaijinKeitaiKeyboard.class);
+        NotificationCompat.Builder mBuilder =
+        	    new NotificationCompat.Builder(this)
+        	    .setSmallIcon(R.drawable.lang_icon_ru)
+        	    .setContentTitle("My notification")
+        	    .setContentText("Hello World!")
+        	    .setContentIntent(PendingIntent.getActivity(this, 0, notificationIntent, 0));
+
+     // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        ////TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        ////stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        ////stackBuilder.addNextIntent(resultIntent);
+        
+        ////PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                    ////0, PendingIntent.FLAG_UPDATE_CURRENT);
+        nm.notify(5954, mBuilder.build());
+        }
+        catch (Exception e)
+        {
+        	String s = e.getMessage();
+        }
         // Update the label on the enter key, depending on what the application
         // says it will do.
         //mCurKeyboard.setImeOptions(getResources(), attribute.imeOptions);
@@ -209,31 +282,15 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                 ic.finishComposingText();
             }
         }
-    }*/
-
-    /**
-     * This tells us about completions that the editor has determined based
-     * on the current text in it.  We want to use this in fullscreen mode
-     * to show the completions ourself, since the editor can not be seen
-     * in that situation.
-     */
-    /*@Override public void onDisplayCompletions(CompletionInfo[] completions) {
-        if (mCompletionOn) {
-            mCompletions = completions;
-            if (completions == null) {
-                setSuggestions(null, false, false);
-                return;
-            }
-            
-            List<String> stringList = new ArrayList<String>();
-            for (int i=0; i<(completions != null ? completions.length : 0); i++) {
-                CompletionInfo ci = completions[i];
-                if (ci != null) stringList.add(ci.getText().toString());
-            }
-            setSuggestions(stringList, true, true);
-        }
-    }*/
+    }*/ 
     
+    Runnable postEditedCharacter = new Runnable() {
+        public void run() {
+        	currentKeyCharIndex = 0;
+        	lastKeyCode = 0;
+        	getCurrentInputConnection().finishComposingText();
+        }
+      };
    
     /**
      * Use this to monitor key events being delivered to the application.
@@ -242,71 +299,58 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
      */
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                // The InputMethodService already takes care of the back
-                // key for us, to dismiss the input method if it is shown.
-                // However, our keyboard could be showing a pop-up window
-                // that back should dismiss, so we first allow it to do that.
-                //if (event.getRepeatCount() == 0 && mInputView != null) {
-                    //if (mInputView.handleBack()) {
-                        //return true;
-                    //}
-                //}
-                break;
-                
-            case KeyEvent.KEYCODE_DEL:
-                // Special handling of the delete key: if we currently are
-                // composing text for the user, we want to modify that instead
-                // of let the application to the delete itself.
-                //if (mComposing.length() > 0) {
-                    //onKey(Keyboard.KEYCODE_DELETE, null);
-                    //return true;
-                //}
-                break;
-                
-            case KeyEvent.KEYCODE_ENTER:
-                // Let the underlying text editor always handle these.
-                return false;
-                
-            default:
-                // For all other keys, if we want to do transformations on
-                // text being entered with a hard keyboard, we need to process
-                // it and do the appropriate action.
-                    /*if (keyCode == KeyEvent.KEYCODE_SPACE
-                            && (event.getMetaState()&KeyEvent.META_ALT_ON) != 0) {
-                        // A silly example: in our input method, Alt+Space
-                        // is a shortcut for 'android' in lower case.
-                        InputConnection ic = getCurrentInputConnection();
-                        if (ic != null) {
-                            // First, tell the editor that it is no longer in the
-                            // shift state, since we are consuming this.
-                            ic.clearMetaKeyStates(KeyEvent.META_ALT_ON);
-                            keyDownUp(KeyEvent.KEYCODE_A);
-                            keyDownUp(KeyEvent.KEYCODE_N);
-                            keyDownUp(KeyEvent.KEYCODE_D);
-                            keyDownUp(KeyEvent.KEYCODE_R);
-                            keyDownUp(KeyEvent.KEYCODE_O);
-                            keyDownUp(KeyEvent.KEYCODE_I);
-                            keyDownUp(KeyEvent.KEYCODE_D);
-                            // And we consume this event.
-                            return true;
-                        }
-                    }*/
-                    if (
-                    		//mPredictionOn &&
-                    		translateKeyDown(keyCode, event)) {
-                        return true;
-                    }
-        }
+	        case KeyEvent.KEYCODE_0: //7
+	        case KeyEvent.KEYCODE_1: //8
+	        case KeyEvent.KEYCODE_2: //...
+	        case KeyEvent.KEYCODE_3:
+	        case KeyEvent.KEYCODE_4:
+	        case KeyEvent.KEYCODE_5:
+	        case KeyEvent.KEYCODE_6:
+	        case KeyEvent.KEYCODE_7:
+	        case KeyEvent.KEYCODE_8:
+	        case KeyEvent.KEYCODE_9: //16
+	        case KeyEvent.KEYCODE_STAR: //17
+	        case KeyEvent.KEYCODE_POUND: //18
+	        	mHandler.removeCallbacks(postEditedCharacter);
+
+	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0)) //if edit in progress, but new key is pressed
+	        	{ 
+	        		//post previous char
+	            	getCurrentInputConnection().finishComposingText();
+	            	currentKeyCharIndex = 0;
+	        	}
+	        	
+	        	//post delayed current char
+        		getCurrentInputConnection().setComposingText(String.valueOf(lang_rus[keyCode-7][currentKeyCharIndex]), 1);
+	            mHandler.postDelayed(postEditedCharacter, 700);
+	            
+	            //currentKeyCharIndex++
+	            currentKeyCharIndex = (currentKeyCharIndex + 1) % lang_rus[keyCode-7].length;
+            	lastKeyCode = keyCode;
+
+	        	return true;
         
+	        default:
+	        	break;
+        }
+
         return super.onKeyDown(keyCode, event);
     }
     
+    @Override public boolean onKeyLongPress(int keyCode, KeyEvent event)
+    {
+    	int i = keyCode;
+    	return super.onKeyLongPress(keyCode, event);
+    }
     /**
      * This translates incoming hard key events in to edit operations on an
      * InputConnection.   */
     private boolean translateKeyDown(int keyCode, KeyEvent event) {
     	mMetaState = MultiTapKeyListener.handleKeyDown(mMetaState,keyCode, event);
+    	if (event.getRepeatCount() > 2)
+    	{
+    	int xxx = 666;
+    	}
     	int c = event.getUnicodeChar(MultiTapKeyListener.getMetaState(mMetaState)); //0 if inactive, 1 if active, 2 if locked.
         mMetaState = MultiTapKeyListener.adjustMetaAfterKeypress(mMetaState);
         
@@ -374,6 +418,11 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     }
     
     private void handleCharacter(int primaryCode, int[] keyCodes) {
+    	
+    	//InputMethodManager.this.setInputMethod(token, id)
+    	//int xxx = KeyCharacterMap.getKeyboardType();
+    	//getCurrentInputConnection().
+    	
         if (isInputViewShown()) {
             //if (mInputView.isShifted())
             {
@@ -409,9 +458,24 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                         //keyCode, event);
             //}
         //}
+    	//lastKeyCode = 0;
         
         return super.onKeyUp(keyCode, event);
     }
+    
+    //this is should work for unicode keys, so basically unusable
+    @Override public boolean onKeyMultiple(int keyCode, int count, KeyEvent event)
+    {
+    	 android.os.Debug.waitForDebugger();  // DEBUG MODE
+    	 int newKeyCode = keyCode;
+         if ( (keyCode == KeyEvent.KEYCODE_BACK) )
+         {
+             newKeyCode = KeyEvent.KEYCODE_MEDIA_PREVIOUS;
+         }
+        return super.onKeyMultiple(newKeyCode, count, event);
+    	//return super.onKeyMultiple(keyCode, count, event);
+    }
+    
 
     /**
      * Helper function to commit any text being composed in to the editor.

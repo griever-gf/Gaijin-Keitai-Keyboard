@@ -198,7 +198,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         //Notification notif = new Notification( R.drawable.lang_icon_ru,  "Time's up!", System.currentTimeMillis());
         //should add custom tag later
         //nm.notify(99, notif);
-        try
+        /*try
         {
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Intent notificationIntent = new Intent(this, GaijinKeitaiKeyboard.class);
@@ -208,25 +208,13 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         	    .setContentTitle("My notification")
         	    .setContentText("Hello World!")
         	    .setContentIntent(PendingIntent.getActivity(this, 0, notificationIntent, 0));
-
-     // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
-        ////TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        // Adds the back stack for the Intent (but not the Intent itself)
-        ////stackBuilder.addParentStack(MainActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
-        ////stackBuilder.addNextIntent(resultIntent);
-        
-        ////PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
-                    ////0, PendingIntent.FLAG_UPDATE_CURRENT);
         nm.notify(5954, mBuilder.build());
         }
         catch (Exception e)
         {
         	String s = e.getMessage();
-        }
+        }*/
+        this.showStatusIcon(R.drawable.lang_icon_ru);
         // Update the label on the enter key, depending on what the application
         // says it will do.
         //mCurKeyboard.setImeOptions(getResources(), attribute.imeOptions);

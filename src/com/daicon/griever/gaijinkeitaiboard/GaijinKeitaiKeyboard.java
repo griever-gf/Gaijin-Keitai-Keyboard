@@ -18,34 +18,16 @@ package com.daicon.griever.gaijinkeitaiboard;
 
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
-//import android.text.method.MetaKeyKeyListener;
+import android.os.Handler;
 import android.text.method.MultiTapKeyListener;
-import android.util.Log;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-import android.view.inputmethod.InputMethodManager;
-import android.os.Handler;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
-import android.app.PendingIntent;
-import android.content.Intent;
+//import android.text.method.MetaKeyKeyListener;
 //import android.os.Bundle;
 //import android.app.Activity;
 //import android.support.v4.app.NotificationCompat.Builder;
-import android.app.PendingIntent;
-
-
-
-import com.daicon.griever.gaijinkeitaiboard.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Example of writing an input method for a soft keyboard.  This code is

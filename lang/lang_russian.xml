@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<language>Русский
+    <button>0
+     	<value> </value>
+ 		<value>0</value>
+    </button>
+    <button>1
+     	<value>?</value>
+ 		<value>!</value>
+ 		<value>1</value>
+    </button>
+	<button>2
+     	<value>а</value>
+ 		<value>б</value>
+ 		<value>в</value>
+ 		<value>г</value>
+    </button>
+</language>

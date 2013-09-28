@@ -43,20 +43,40 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     private long mLastShiftTime;
     private long mMetaState;
     
+    String[] languages = new String[]{"ENG", "RUS"};
+    int current_lang_index = 0;
+    
     char[][] lang_rus = new char[][]{
     		  { ' ', '0', '+', '-', '_' },
     		  { '.', ',', '1', '?', '!', '@', '#', '$', '%', '^', '&', '*', ':', '/', '\'', '=', '(', ')' },
     		  { 'à', 'á', 'â', 'ã', '2', 'A', 'Á', 'Â', 'Ã' },
-    		  { 'ä', 'å', '¸', 'æ', 'ç', '3', 'Ä', 'Å', '¨', 'Æ', 'Ç',},
-    		  { 'è', 'é', 'ê', 'ë', '4'},
-    		  { 'ì', 'í', 'î', 'ï', '5'},
-    		  { 'ð', 'ñ', 'ò', 'ó', '6'},
-    		  { 'ô', 'õ', 'ö', '÷', '7'},
-    		  { 'ø', 'ù', 'ú', 'û', '8'},
-    		  { 'ü', 'ý', 'þ', 'ÿ', '9'},
+    		  { 'ä', 'å', '¸', 'æ', 'ç', '3', 'Ä', 'Å', '¨', 'Æ', 'Ç'},
+    		  { 'è', 'é', 'ê', 'ë', '4', 'È', 'É', 'Ê', 'Ë'},
+    		  { 'ì', 'í', 'î', 'ï', '5', 'Ì', 'Í', 'Î', 'Ï'},
+    		  { 'ð', 'ñ', 'ò', 'ó', '6', 'Ð', 'Ñ', 'Ò', 'Ó'},
+    		  { 'ô', 'õ', 'ö', '÷', '7', 'Ô', 'Õ', 'Ö', '×'},
+    		  { 'ø', 'ù', 'ú', 'û', '8', 'Ø', 'Ù', 'Ú', 'Û'},
+    		  { 'ü', 'ý', 'þ', 'ÿ', '9', 'Ü', 'Ý', 'Þ', 'ß'},
     		  { '*' },
     		  { '#' }
     		};
+    
+    char[][] lang_eng = new char[][]{
+  		  { ' ', '0', '+', '-', '_' },
+  		  { '.', ',', '1', '?', '!', '@', '#', '$', '%', '^', '&', '*', ':', '/', '\'', '=', '(', ')' },
+  		  { 'a', 'b', 'c', '2', 'A', 'B', 'C'},
+  		  { 'd', 'e', 'f', '3', 'D', 'E', 'F'},
+  		  { 'g', 'h', 'i', '4', 'G', 'H', 'I'},
+  		  { 'j', 'k', 'l', '5', 'J', 'K', 'L'},
+  		  { 'm', 'n', 'o', '6', 'M', 'N', 'O'},
+  		  { 'p', 'q', 'r', 's', '7', 'P', 'Q', 'R', 'S'},
+  		  { 't', 'u', 'v', '8', 'T', 'U', 'V'},
+  		  { 'w', 'x', 'y', 'z', '9', 'W', 'X', 'Y', 'Z'},
+  		  { '*' },
+  		  { '#' }
+  		};
+    
+    char[][] current_lang_chars;
     
     private int currentKeyCharIndex;
     private int lastKeyCode;
@@ -80,6 +100,24 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         android.os.Debug.waitForDebugger();  // DEBUG MODE
         mWordSeparators = getResources().getString(R.string.word_separators);
         mHandler = new Handler();
+    }
+    
+    private void setLanguage(int language_code) {
+    	int icon_id = 0;
+    	switch (language_code)
+    	{
+    		case 0: //ENG
+    			icon_id = R.drawable.lang_icon_en;
+    			current_lang_chars = lang_eng;
+    			break;
+    		case 1: //RUS
+    			icon_id = R.drawable.lang_icon_ru;
+    			current_lang_chars = lang_rus;
+    			break;
+			default:
+				break;
+    	}
+    	this.showStatusIcon(icon_id);
     }
     
     
@@ -173,6 +211,8 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                 updateShiftKeyState(attribute);
         }
         
+        setLanguage(current_lang_index);
+        
         //---get the notification ID for the notification; 
         // passed in by the MainActivity---
         
@@ -196,7 +236,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         {
         	String s = e.getMessage();
         }*/
-        this.showStatusIcon(R.drawable.lang_icon_ru);
+        
         // Update the label on the enter key, depending on what the application
         // says it will do.
         //mCurKeyboard.setImeOptions(getResources(), attribute.imeOptions);
@@ -208,6 +248,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
      */
     @Override public void onFinishInput() {
         super.onFinishInput();
+        this.hideStatusIcon();
         
         // Clear current composing text and candidates.
         //mComposing.setLength(0);
@@ -279,27 +320,39 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
 	        case KeyEvent.KEYCODE_7:
 	        case KeyEvent.KEYCODE_8:
 	        case KeyEvent.KEYCODE_9: //16
-	        case KeyEvent.KEYCODE_STAR: //17
+	        //case KeyEvent.KEYCODE_STAR: //17
 	        case KeyEvent.KEYCODE_POUND: //18
 	        	mHandler.removeCallbacks(postEditedCharacter);
 
-	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0)) //if edit in progress, but new key is pressed
+	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0) && (lastKeyCode != 17)) //if edit in progress, but new key is pressed
 	        	{ 
 	        		//post previous char
 	            	getCurrentInputConnection().finishComposingText();
 	            	currentKeyCharIndex = 0;
 	        	}
 	        	
-	        	//post delayed current char
-        		getCurrentInputConnection().setComposingText(String.valueOf(lang_rus[keyCode-7][currentKeyCharIndex]), 1);
+	        	//delayed post of current char
+        		getCurrentInputConnection().setComposingText(String.valueOf(current_lang_chars[keyCode-7][currentKeyCharIndex]), 1);
 	            mHandler.postDelayed(postEditedCharacter, 700);
 	            
 	            //currentKeyCharIndex++
-	            currentKeyCharIndex = (currentKeyCharIndex + 1) % lang_rus[keyCode-7].length;
+	            currentKeyCharIndex = (currentKeyCharIndex + 1) % current_lang_chars[keyCode-7].length;
             	lastKeyCode = keyCode;
 
 	        	return true;
-        
+	        case KeyEvent.KEYCODE_STAR: //17
+	        	mHandler.removeCallbacks(postEditedCharacter);
+	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0) && (lastKeyCode != 17)) //if edit in progress
+	        	{ 
+	        		//post previous char
+	            	getCurrentInputConnection().finishComposingText();
+	            	currentKeyCharIndex = 0;
+	        	}
+	        	//getCurrentInputConnection().finishComposingText();
+            	//currentKeyCharIndex = 0;
+	        	current_lang_index = (current_lang_index + 1) % languages.length;
+	        	setLanguage(current_lang_index);
+	        	return true;
 	        default:
 	        	break;
         }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <language name="english">
+    	<icon_file_name>lang_icon_en</icon_file_name>
+    	<button_chars name="button_0"> 0-_+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()</button_chars>
+    	<button_chars name="button_2">abc2ABC</button_chars>
+		<button_chars name="button_2">def3DEF</button_chars>
+   		<button_chars name="button_3">ghi4GHI</button_chars>
+   		<button_chars name="button_4">jkl5JKL</button_chars>
+   		<button_chars name="button_5">mno6MNO</button_chars>
+   		<button_chars name="button_6">pqrs7PQRS</button_chars>
+   		<button_chars name="button_8">tuv8TUV</button_chars>
+   		<button_chars name="button_9">wxyz9WXYZ</button_chars>
+    </language>
+    <language name="russian">
+    	<icon_file_name>lang_icon_ru</icon_file_name>
+    	<button_chars name="button_0"> 0-_+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()</button_chars>
+    	<button_chars name="button_2">абвг2AБВГ</button_chars>
+		<button_chars name="button_2">деёжз3ДЕЁЖЗ</button_chars>
+   		<button_chars name="button_3">ийкл4ИЙКЛ</button_chars>
+   		<button_chars name="button_4">мноп5МНОП</button_chars>
+   		<button_chars name="button_5">рсту6РСТУ</button_chars>
+   		<button_chars name="button_6">фхцч7ФХЦЧ</button_chars>
+   		<button_chars name="button_8">шщъы8ШЩЪЫ</button_chars>
+   		<button_chars name="button_9">ьэюя9ЬЭЮЯ</button_chars>
+    </language>
+</resources>

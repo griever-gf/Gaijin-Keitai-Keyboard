@@ -1,80 +1,29 @@
-/*
- * Copyright (C) 2008-2009 Google Inc.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-
 package com.daicon.griever.gaijinkeitaiboard;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import android.content.res.Resources;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.os.Handler;
 import android.text.method.MultiTapKeyListener;
+import android.util.Xml;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-//import android.text.method.MetaKeyKeyListener;
-//import android.os.Bundle;
-//import android.app.Activity;
-//import android.support.v4.app.NotificationCompat.Builder;
+import org.xmlpull.v1.XmlPullParser;
 
-/**
- * Example of writing an input method for a soft keyboard.  This code is
- * focused on simplicity over completeness, so it should in no way be considered
- * to be a complete soft keyboard implementation.  Its purpose is to provide
- * a basic example for how you would get started writing an input method, to
- * be fleshed out as appropriate.
- */
+
 public class GaijinKeitaiKeyboard extends InputMethodService {
     
-    //private StringBuilder mComposing = new StringBuilder();
     private boolean mCapsLock;
     private long mLastShiftTime;
     private long mMetaState;
-    
-    String[] languages = new String[]{"ENG", "RUS"};
+
     int current_lang_index = 0;
-    
-    char[][] lang_rus = new char[][]{
-    		  { ' ', '0', '+', '-', '_' },
-    		  { '.', ',', '1', '?', '!', '@', '#', '$', '%', '^', '&', '*', ':', '/', '\'', '=', '(', ')' },
-    		  { 'à', 'á', 'â', 'ã', '2', 'A', 'Á', 'Â', 'Ã' },
-    		  { 'ä', 'å', '¸', 'æ', 'ç', '3', 'Ä', 'Å', '¨', 'Æ', 'Ç'},
-    		  { 'è', 'é', 'ê', 'ë', '4', 'È', 'É', 'Ê', 'Ë'},
-    		  { 'ì', 'í', 'î', 'ï', '5', 'Ì', 'Í', 'Î', 'Ï'},
-    		  { 'ð', 'ñ', 'ò', 'ó', '6', 'Ð', 'Ñ', 'Ò', 'Ó'},
-    		  { 'ô', 'õ', 'ö', '÷', '7', 'Ô', 'Õ', 'Ö', '×'},
-    		  { 'ø', 'ù', 'ú', 'û', '8', 'Ø', 'Ù', 'Ú', 'Û'},
-    		  { 'ü', 'ý', 'þ', 'ÿ', '9', 'Ü', 'Ý', 'Þ', 'ß'},
-    		  { '*' },
-    		  { '#' }
-    		};
-    
-    char[][] lang_eng = new char[][]{
-  		  { ' ', '0', '+', '-', '_' },
-  		  { '.', ',', '1', '?', '!', '@', '#', '$', '%', '^', '&', '*', ':', '/', '\'', '=', '(', ')' },
-  		  { 'a', 'b', 'c', '2', 'A', 'B', 'C'},
-  		  { 'd', 'e', 'f', '3', 'D', 'E', 'F'},
-  		  { 'g', 'h', 'i', '4', 'G', 'H', 'I'},
-  		  { 'j', 'k', 'l', '5', 'J', 'K', 'L'},
-  		  { 'm', 'n', 'o', '6', 'M', 'N', 'O'},
-  		  { 'p', 'q', 'r', 's', '7', 'P', 'Q', 'R', 'S'},
-  		  { 't', 'u', 'v', '8', 'T', 'U', 'V'},
-  		  { 'w', 'x', 'y', 'z', '9', 'W', 'X', 'Y', 'Z'},
-  		  { '*' },
-  		  { '#' }
-  		};
     
     char[][] current_lang_chars;
     
@@ -83,11 +32,21 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     
     private Handler mHandler;
     
-    //private LatinKeyboard mSymbolsKeyboard;
-    //private LatinKeyboard mSymbolsShiftedKeyboard;
-    //private LatinKeyboard mQwertyKeyboard;
-    
-    //private LatinKeyboard mCurKeyboard;/
+    private class LanguageData {
+    	public ArrayList<String> Characters;
+    	public int IconIdResource;
+    	public LanguageData(ArrayList<String> chars, int IconID)
+    	{
+    		Characters = chars;
+    		IconIdResource = IconID;
+    	}
+    	public LanguageData()
+    	{
+    		Characters = new ArrayList<String>();
+    	}
+	}
+
+    ArrayList<LanguageData> allLanguages;
     
     private String mWordSeparators;
     
@@ -100,26 +59,80 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         android.os.Debug.waitForDebugger();  // DEBUG MODE
         mWordSeparators = getResources().getString(R.string.word_separators);
         mHandler = new Handler();
+        fillLanguageData();
     }
     
     private void setLanguage(int language_code) {
-    	int icon_id = 0;
-    	switch (language_code)
-    	{
-    		case 0: //ENG
-    			icon_id = R.drawable.lang_icon_en;
-    			current_lang_chars = lang_eng;
-    			break;
-    		case 1: //RUS
-    			icon_id = R.drawable.lang_icon_ru;
-    			current_lang_chars = lang_rus;
-    			break;
-			default:
-				break;
+    	current_lang_chars = new char[allLanguages.get(language_code).Characters.size()][];
+    	for (int i = 0 ; i < current_lang_chars.length; i++){
+    		current_lang_chars[i] = new char[allLanguages.get(language_code).Characters.get(i).length()];
+    		for (int j = 0 ; j < current_lang_chars[i].length; j++)
+    			current_lang_chars[i][j] = allLanguages.get(language_code).Characters.get(i).charAt(j);
     	}
+    	int icon_id = allLanguages.get(language_code).IconIdResource; 
     	this.showStatusIcon(icon_id);
     }
+
+    public class Category	{
+    	private String name;
+    	public String getName(){
+    	return name;
+    	}
+    	public void setName(String name){
+    	this.name = name;
+    	}
+    	public Category(String name){
+    	setName(name);
+    	}
+	}
     
+    private void fillLanguageData()
+    {
+        XmlPullParser parser = Xml.newPullParser();
+        allLanguages = new ArrayList<LanguageData>();
+        try {
+        	Resources res = this.getResources();
+        	parser = res.getXml(R.xml.languages);
+            parser.next();
+            int eventType = parser.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT){
+                String name = null;
+				switch (eventType){
+                    case XmlPullParser.START_DOCUMENT:
+                        break;
+                    case XmlPullParser.START_TAG:
+                        name = parser.getName();
+                        if (name.equals("language"))
+                        {
+                        	allLanguages.add(new LanguageData());
+                        }
+                        if (name.equals("icon_file_name"))
+                        {	
+                        	parser.next(); //switch to text inside tag
+                        	allLanguages.get(allLanguages.size()-1).IconIdResource = this.getResources().getIdentifier(parser.getText(), "drawable", this.getPackageName());
+                        }
+                        if (name.contains("button_"))
+                        {	
+                        	parser.next(); //switch to text inside tag
+                        	allLanguages.get(allLanguages.size()-1).Characters.add(parser.getText());
+                        }
+                        //String xx = parser.getAttributeValue(null, "name");
+                        break;
+                    case XmlPullParser.TEXT:
+                    	break;
+                    case XmlPullParser.END_TAG:
+                        break;
+                    }
+                eventType = parser.next();
+                }
+        } catch (FileNotFoundException e) {
+            // TODO
+        } catch (IOException e) {
+            // TODO
+        } catch (Exception e){
+            // TODO
+        }
+    }
     
     /**
      * This is the main point where we do our initialization of the input method
@@ -249,21 +262,6 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     @Override public void onFinishInput() {
         super.onFinishInput();
         this.hideStatusIcon();
-        
-        // Clear current composing text and candidates.
-        //mComposing.setLength(0);
-        //updateCandidates();
-        
-        // We only hide the candidates window when finishing input on
-        // a particular editor, to avoid popping the underlying application
-        // up and down if the user is entering text into the bottom of
-        // its window.
-        //setCandidatesViewShown(false);
-        
-        //mCurKeyboard = mQwertyKeyboard;
-        //if (mInputView != null) {
-            //mInputView.closing();
-        //}
     }
     
     //@Override public void onStartInputView(EditorInfo attribute, boolean restarting) {
@@ -350,7 +348,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
 	        	}
 	        	//getCurrentInputConnection().finishComposingText();
             	//currentKeyCharIndex = 0;
-	        	current_lang_index = (current_lang_index + 1) % languages.length;
+	        	current_lang_index = (current_lang_index + 1) % allLanguages.size();
 	        	setLanguage(current_lang_index);
 	        	return true;
 	        default:

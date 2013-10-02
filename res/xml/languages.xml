@@ -1,29 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <language name="english">
-    	<icon_file_name>lang_icon_en</icon_file_name>
-    	<button_chars name="button_0"> 0-_+</button_chars>
-    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()</button_chars>
-    	<button_chars name="button_2">abc2ABC</button_chars>
-		<button_chars name="button_2">def3DEF</button_chars>
-   		<button_chars name="button_3">ghi4GHI</button_chars>
-   		<button_chars name="button_4">jkl5JKL</button_chars>
-   		<button_chars name="button_5">mno6MNO</button_chars>
-   		<button_chars name="button_6">pqrs7PQRS</button_chars>
-   		<button_chars name="button_8">tuv8TUV</button_chars>
-   		<button_chars name="button_9">wxyz9WXYZ</button_chars>
+    <language name="English (Latin)">
+    	<icon_file_name>lang_icon_eng</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2</button_chars>
+		<button_chars name="button_3">def3</button_chars>
+   		<button_chars name="button_4">ghi4</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6</button_chars>
+   		<button_chars name="button_7">pqrs7</button_chars>
+   		<button_chars name="button_8">tuv8</button_chars>
+   		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="russian">
+    <language name="Русский">
     	<icon_file_name>lang_icon_ru</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
+    	<button_chars name="button_2">абвг2</button_chars>
+		<button_chars name="button_3">деёжз3</button_chars>
+   		<button_chars name="button_4">ийкл4</button_chars>
+   		<button_chars name="button_5">мноп5</button_chars>
+   		<button_chars name="button_6">рсту6</button_chars>
+   		<button_chars name="button_7">фхцч7</button_chars>
+   		<button_chars name="button_8">шщъы8</button_chars>
+   		<button_chars name="button_9">ьэюя9</button_chars>
+    </language>
+    <language name="Deutsch">
+    	<icon_file_name>lang_icon_de</icon_file_name>
     	<button_chars name="button_0"> 0-_+</button_chars>
-    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()</button_chars>
-    	<button_chars name="button_2">абвг2AБВГ</button_chars>
-		<button_chars name="button_2">деёжз3ДЕЁЖЗ</button_chars>
-   		<button_chars name="button_3">ийкл4ИЙКЛ</button_chars>
-   		<button_chars name="button_4">мноп5МНОП</button_chars>
-   		<button_chars name="button_5">рсту6РСТУ</button_chars>
-   		<button_chars name="button_6">фхцч7ФХЦЧ</button_chars>
-   		<button_chars name="button_8">шщъы8ШЩЪЫ</button_chars>
-   		<button_chars name="button_9">ьэюя9ЬЭЮЯ</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2ä</button_chars>
+		<button_chars name="button_3">def3</button_chars>
+   		<button_chars name="button_4">ghi4</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6ö</button_chars>
+   		<button_chars name="button_7">pqrs7ß</button_chars>
+   		<button_chars name="button_8">tuv8ü</button_chars>
+   		<button_chars name="button_9">wxyz9</button_chars>
+    </language>
+    <language name="Français">
+    	<icon_file_name>lang_icon_fr</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"«»=()[]</button_chars>
+    	<button_chars name="button_2">abc2àâ</button_chars>
+		<button_chars name="button_3">def3èéê</button_chars>
+   		<button_chars name="button_4">ghi4îï</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6ô</button_chars>
+   		<button_chars name="button_7">pqrs7</button_chars>
+   		<button_chars name="button_8">tuv8ùû</button_chars>
+   		<button_chars name="button_9">wxyz9ÿ</button_chars>
+    </language>
+    <language name="Italiana">
+    	<icon_file_name>lang_icon_it</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"«»=()[]</button_chars>
+    	<button_chars name="button_2">abc2à</button_chars>
+		<button_chars name="button_3">def3éè</button_chars>
+   		<button_chars name="button_4">ghi4íìî</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6óò</button_chars>
+   		<button_chars name="button_7">pqrs7</button_chars>
+   		<button_chars name="button_8">tuv8úù</button_chars>
+   		<button_chars name="button_9">wxyz9</button_chars>
+    </language>
+    <language name="Español">
+    	<icon_file_name>lang_icon_es</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?¿!¡@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2áç</button_chars>
+		<button_chars name="button_3">def3é</button_chars>
+   		<button_chars name="button_4">ghi4íï</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6ó</button_chars>
+   		<button_chars name="button_7">pqrs7</button_chars>
+   		<button_chars name="button_8">tuv8úü</button_chars>
+   		<button_chars name="button_9">wxyz9</button_chars>
+    </language>
+    <language name="Portuguesa">
+    	<icon_file_name>lang_icon_pt</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?¿!¡@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2áàâãç</button_chars>
+		<button_chars name="button_3">def3éê</button_chars>
+   		<button_chars name="button_4">ghi4í</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6óôõ</button_chars>
+   		<button_chars name="button_7">pqrs7</button_chars>
+   		<button_chars name="button_8">tuv8úü</button_chars>
+   		<button_chars name="button_9">wxyz9</button_chars>
+    </language>
+    <language name="Dutch">
+    	<icon_file_name>lang_icon_nl</icon_file_name>
+    	<button_chars name="button_0"> 0-_+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2äáàâç</button_chars>
+		<button_chars name="button_3">def3ëéèê</button_chars>
+   		<button_chars name="button_4">ghi4ïíìî</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6öóòô</button_chars>
+   		<button_chars name="button_7">pqrs7</button_chars>
+   		<button_chars name="button_8">tuv8üúùû</button_chars>
+   		<button_chars name="button_9">wxyz9</button_chars>
+    </language>
+    <language name="Dansk">
+    	<icon_file_name>lang_icon_dk</icon_file_name>
+    	<button_chars name="button_0"> 0-_+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2æåáàä</button_chars>
+		<button_chars name="button_3">def3éð</button_chars>
+   		<button_chars name="button_4">ghi4í</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6øöó</button_chars>
+   		<button_chars name="button_7">pqrs7</button_chars>
+   		<button_chars name="button_8">tuv8úü</button_chars>
+   		<button_chars name="button_9">wxyz9ý</button_chars>
+    </language>
+    <language name="Norsk">
+    	<icon_file_name>lang_icon_no</icon_file_name>
+    	<button_chars name="button_0"> 0-_+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2æåáàäč</button_chars>
+		<button_chars name="button_3">def3éèêđ</button_chars>
+   		<button_chars name="button_4">ghi4ï</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6øöóòôŋ</button_chars>
+   		<button_chars name="button_7">pqrs7š</button_chars>
+   		<button_chars name="button_8">tuv8üŧ</button_chars>
+   		<button_chars name="button_9">wxyz9þž</button_chars>
+    </language>
+    <language name="Svenska">
+    	<icon_file_name>lang_icon_sw</icon_file_name>
+    	<button_chars name="button_0"> 0-_+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2åäàæáč</button_chars>
+		<button_chars name="button_3">def3éđ</button_chars>
+   		<button_chars name="button_4">ghi4ï</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6öø</button_chars>
+   		<button_chars name="button_7">pqrs7š</button_chars>
+   		<button_chars name="button_8">tuv8üŧ</button_chars>
+   		<button_chars name="button_9">wxyz9ž</button_chars>
+    </language>
+    <language name="Suomi">
+    	<icon_file_name>lang_icon_fi</icon_file_name>
+    	<button_chars name="button_0"> 0-_+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2äåáâč</button_chars>
+		<button_chars name="button_3">def3éđ</button_chars>
+   		<button_chars name="button_4">ghi4ǧǥ</button_chars>
+   		<button_chars name="button_5">jkl5ǩ</button_chars>
+   		<button_chars name="button_6">mno6öøŋõ</button_chars>
+   		<button_chars name="button_7">pqrs7š</button_chars>
+   		<button_chars name="button_8">tuv8üŧ</button_chars>
+   		<button_chars name="button_9">wxyz9žʒǯ</button_chars>
+    </language>
+    <language name="ελληνικά">
+    	<icon_file_name>lang_icon_gr</icon_file_name>
+    	<button_chars name="button_0"> 0-_+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">αβγ2</button_chars>
+		<button_chars name="button_3">δεζ3</button_chars>
+   		<button_chars name="button_4">ηθι4</button_chars>
+   		<button_chars name="button_5">κλμ5</button_chars>
+   		<button_chars name="button_6">νξο6</button_chars>
+   		<button_chars name="button_7">πρσς7</button_chars>
+   		<button_chars name="button_8">τυφ8</button_chars>
+   		<button_chars name="button_9">χψω9</button_chars>
+    </language>
+    <language name="Український">
+    	<icon_file_name>lang_icon_ua</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
+    	<button_chars name="button_2">абвгґ2</button_chars>
+		<button_chars name="button_3">деєжзё3</button_chars>
+   		<button_chars name="button_4">иіїйкл4</button_chars>
+   		<button_chars name="button_5">мноп5</button_chars>
+   		<button_chars name="button_6">рстуў6</button_chars>
+   		<button_chars name="button_7">фхцч7</button_chars>
+   		<button_chars name="button_8">шщъы8</button_chars>
+   		<button_chars name="button_9">юяьэ9</button_chars>
+    </language>
+    <language name="Беларускі">
+    	<icon_file_name>lang_icon_by</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
+    	<button_chars name="button_2">абвг2</button_chars>
+		<button_chars name="button_3">деёжз3</button_chars>
+   		<button_chars name="button_4">ійкл4</button_chars>
+   		<button_chars name="button_5">мноп5</button_chars>
+   		<button_chars name="button_6">рстуў6</button_chars>
+   		<button_chars name="button_7">фхцч7</button_chars>
+   		<button_chars name="button_8">шы8</button_chars>
+   		<button_chars name="button_9">ьэюя9</button_chars>
+    </language>
+    <language name="Български">
+    	<icon_file_name>lang_icon_bg</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
+    	<button_chars name="button_2">абвг2</button_chars>
+		<button_chars name="button_3">дежз3</button_chars>
+   		<button_chars name="button_4">ийкл4</button_chars>
+   		<button_chars name="button_5">мноп5</button_chars>
+   		<button_chars name="button_6">рсту6</button_chars>
+   		<button_chars name="button_7">фхцч7</button_chars>
+   		<button_chars name="button_8">шщъ8</button_chars>
+   		<button_chars name="button_9">ьюя9</button_chars>
+    </language>
+    <language name="Српски">
+    	<icon_file_name>lang_icon_ser</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
+    	<button_chars name="button_2">абцчћ2</button_chars>
+		<button_chars name="button_3">дефђ3</button_chars>
+   		<button_chars name="button_4">гхи4</button_chars>
+   		<button_chars name="button_5">jкл5</button_chars>
+   		<button_chars name="button_6">мно6</button_chars>
+   		<button_chars name="button_7">пљрсш7</button_chars>
+   		<button_chars name="button_8">тув8</button_chars>
+   		<button_chars name="button_9">њџзж9</button_chars>
+    </language>
+    <language name="Македонски">
+    	<icon_file_name>lang_icon_mk</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
+    	<button_chars name="button_2">абвг2</button_chars>
+		<button_chars name="button_3">дѓеж3</button_chars>
+   		<button_chars name="button_4">зѕијй4</button_chars>
+   		<button_chars name="button_5">клљ5</button_chars>
+   		<button_chars name="button_6">мнњо6</button_chars>
+   		<button_chars name="button_7">прс7</button_chars>
+   		<button_chars name="button_8">тќуфћ8</button_chars>
+   		<button_chars name="button_9">хцчџшщъьюя9</button_chars>
+    </language>
+    <language name="Română">
+    	<icon_file_name>lang_icon_ro</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2âăã</button_chars>
+		<button_chars name="button_3">def3</button_chars>
+   		<button_chars name="button_4">ghi4î</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6</button_chars>
+   		<button_chars name="button_7">pqrs7ș</button_chars>
+   		<button_chars name="button_8">tuv8ț</button_chars>
+   		<button_chars name="button_9">wxyz9</button_chars>
+    </language>
+    <language name="Polski">
+    	<icon_file_name>lang_icon_pl</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2ąć</button_chars>
+		<button_chars name="button_3">def3ę</button_chars>
+   		<button_chars name="button_4">ghi4</button_chars>
+   		<button_chars name="button_5">jkl5ł</button_chars>
+   		<button_chars name="button_6">mno6ńó</button_chars>
+   		<button_chars name="button_7">pqrs7ś</button_chars>
+   		<button_chars name="button_8">tuv8</button_chars>
+   		<button_chars name="button_9">wxyz9źż</button_chars>
+    </language>
+    <language name="Čeština">
+    	<icon_file_name>lang_icon_cz</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2áč</button_chars>
+		<button_chars name="button_3">def3éě</button_chars>
+   		<button_chars name="button_4">ghi4í</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6ňó</button_chars>
+   		<button_chars name="button_7">pqrs7řš</button_chars>
+   		<button_chars name="button_8">tuv8ťúů</button_chars>
+   		<button_chars name="button_9">wxyz9ýž</button_chars>
+    </language>
+    <language name="Magyar">
+    	<icon_file_name>lang_icon_hu</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2áà</button_chars>
+		<button_chars name="button_3">def3é</button_chars>
+   		<button_chars name="button_4">ghi4í</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6óöő</button_chars>
+   		<button_chars name="button_7">pqrs7</button_chars>
+   		<button_chars name="button_8">tuv8úüű</button_chars>
+   		<button_chars name="button_9">wxyz9</button_chars>
+    </language>
+    <language name="Türkçe">
+    	<icon_file_name>lang_icon_tr</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">abc2çâ</button_chars>
+		<button_chars name="button_3">def3ê</button_chars>
+   		<button_chars name="button_4">ghi4ğıî</button_chars>
+   		<button_chars name="button_5">jkl5</button_chars>
+   		<button_chars name="button_6">mno6ö</button_chars>
+   		<button_chars name="button_7">pqrs7ş</button_chars>
+   		<button_chars name="button_8">tuv8üû</button_chars>
+   		<button_chars name="button_9">wxyz9</button_chars>
+    </language>
+    <language name="עִבְרִית">
+    	<icon_file_name>lang_icon_iz</icon_file_name>
+    	<button_chars name="button_0"> 0_-+</button_chars>
+    	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
+    	<button_chars name="button_2">דהו2</button_chars>
+		<button_chars name="button_3">אבג3</button_chars>
+   		<button_chars name="button_4">מםנן4</button_chars>
+   		<button_chars name="button_5">יכךל5</button_chars>
+   		<button_chars name="button_6">זחט6</button_chars>
+   		<button_chars name="button_7">רשת7</button_chars>
+   		<button_chars name="button_8">צץק8</button_chars>
+   		<button_chars name="button_9">סעפף9</button_chars>
     </language>
 </resources>

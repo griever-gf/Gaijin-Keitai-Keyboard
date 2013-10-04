@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <language name="English (Latin)">
+    <language name="@string/lang_english">
     	<icon_file_name>lang_icon_eng</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -13,7 +13,7 @@
    		<button_chars name="button_8">tuv8</button_chars>
    		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="Русский">
+    <language name="@string/lang_russian">
     	<icon_file_name>lang_icon_ru</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
@@ -26,7 +26,7 @@
    		<button_chars name="button_8">шщъы8</button_chars>
    		<button_chars name="button_9">ьэюя9</button_chars>
     </language>
-    <language name="Deutsch">
+    <language name="@string/lang_german">
     	<icon_file_name>lang_icon_de</icon_file_name>
     	<button_chars name="button_0"> 0-_+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -39,7 +39,7 @@
    		<button_chars name="button_8">tuv8ü</button_chars>
    		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="Français">
+    <language name="@string/lang_french">
     	<icon_file_name>lang_icon_fr</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"«»=()[]</button_chars>
@@ -52,7 +52,7 @@
    		<button_chars name="button_8">tuv8ùû</button_chars>
    		<button_chars name="button_9">wxyz9ÿ</button_chars>
     </language>
-    <language name="Italiana">
+    <language name="@string/lang_italian">
     	<icon_file_name>lang_icon_it</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"«»=()[]</button_chars>
@@ -65,7 +65,7 @@
    		<button_chars name="button_8">tuv8úù</button_chars>
    		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="Español">
+    <language name="@string/lang_spanish">
     	<icon_file_name>lang_icon_es</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?¿!¡@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -78,7 +78,7 @@
    		<button_chars name="button_8">tuv8úü</button_chars>
    		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="Portuguesa">
+    <language name="@string/lang_portuguese">
     	<icon_file_name>lang_icon_pt</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?¿!¡@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -91,7 +91,7 @@
    		<button_chars name="button_8">tuv8úü</button_chars>
    		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="Dutch">
+    <language name="@string/lang_dutch">
     	<icon_file_name>lang_icon_nl</icon_file_name>
     	<button_chars name="button_0"> 0-_+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -104,7 +104,7 @@
    		<button_chars name="button_8">tuv8üúùû</button_chars>
    		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="Dansk">
+    <language name="@string/lang_danish">
     	<icon_file_name>lang_icon_dk</icon_file_name>
     	<button_chars name="button_0"> 0-_+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -117,7 +117,7 @@
    		<button_chars name="button_8">tuv8úü</button_chars>
    		<button_chars name="button_9">wxyz9ý</button_chars>
     </language>
-    <language name="Norsk">
+    <language name="@string/lang_norwegian">
     	<icon_file_name>lang_icon_no</icon_file_name>
     	<button_chars name="button_0"> 0-_+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -130,7 +130,7 @@
    		<button_chars name="button_8">tuv8üŧ</button_chars>
    		<button_chars name="button_9">wxyz9þž</button_chars>
     </language>
-    <language name="Svenska">
+    <language name="@string/lang_swedish">
     	<icon_file_name>lang_icon_sw</icon_file_name>
     	<button_chars name="button_0"> 0-_+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -143,7 +143,7 @@
    		<button_chars name="button_8">tuv8üŧ</button_chars>
    		<button_chars name="button_9">wxyz9ž</button_chars>
     </language>
-    <language name="Suomi">
+    <language name="@string/lang_finnish">
     	<icon_file_name>lang_icon_fi</icon_file_name>
     	<button_chars name="button_0"> 0-_+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -156,7 +156,7 @@
    		<button_chars name="button_8">tuv8üŧ</button_chars>
    		<button_chars name="button_9">wxyz9žʒǯ</button_chars>
     </language>
-    <language name="ελληνικά">
+    <language name="@string/lang_greek">
     	<icon_file_name>lang_icon_gr</icon_file_name>
     	<button_chars name="button_0"> 0-_+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -169,7 +169,7 @@
    		<button_chars name="button_8">τυφ8</button_chars>
    		<button_chars name="button_9">χψω9</button_chars>
     </language>
-    <language name="Український">
+    <language name="@string/lang_ukrainian">
     	<icon_file_name>lang_icon_ua</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
@@ -182,7 +182,7 @@
    		<button_chars name="button_8">шщъы8</button_chars>
    		<button_chars name="button_9">юяьэ9</button_chars>
     </language>
-    <language name="Беларускі">
+    <language name="@string/lang_belarusian">
     	<icon_file_name>lang_icon_by</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
@@ -195,7 +195,7 @@
    		<button_chars name="button_8">шы8</button_chars>
    		<button_chars name="button_9">ьэюя9</button_chars>
     </language>
-    <language name="Български">
+    <language name="@string/lang_bulgarian">
     	<icon_file_name>lang_icon_bg</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
@@ -208,7 +208,7 @@
    		<button_chars name="button_8">шщъ8</button_chars>
    		<button_chars name="button_9">ьюя9</button_chars>
     </language>
-    <language name="Српски">
+    <language name="@string/lang_serbian">
     	<icon_file_name>lang_icon_ser</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
@@ -221,7 +221,7 @@
    		<button_chars name="button_8">тув8</button_chars>
    		<button_chars name="button_9">њџзж9</button_chars>
     </language>
-    <language name="Македонски">
+    <language name="@string/lang_makedonian">
     	<icon_file_name>lang_icon_mk</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#№$%^&amp;*/:;\'"«»=()[]</button_chars>
@@ -234,7 +234,7 @@
    		<button_chars name="button_8">тќуфћ8</button_chars>
    		<button_chars name="button_9">хцчџшщъьюя9</button_chars>
     </language>
-    <language name="Română">
+    <language name="@string/lang_romanian">
     	<icon_file_name>lang_icon_ro</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -247,7 +247,7 @@
    		<button_chars name="button_8">tuv8ț</button_chars>
    		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="Polski">
+    <language name="@string/lang_polish">
     	<icon_file_name>lang_icon_pl</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -260,7 +260,7 @@
    		<button_chars name="button_8">tuv8</button_chars>
    		<button_chars name="button_9">wxyz9źż</button_chars>
     </language>
-    <language name="Čeština">
+    <language name="@string/lang_czech">
     	<icon_file_name>lang_icon_cz</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -273,7 +273,7 @@
    		<button_chars name="button_8">tuv8ťúů</button_chars>
    		<button_chars name="button_9">wxyz9ýž</button_chars>
     </language>
-    <language name="Magyar">
+    <language name="@string/lang_hungarian">
     	<icon_file_name>lang_icon_hu</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -286,7 +286,7 @@
    		<button_chars name="button_8">tuv8úüű</button_chars>
    		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="Türkçe">
+    <language name="@string/lang_turkish">
     	<icon_file_name>lang_icon_tr</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>
@@ -299,7 +299,7 @@
    		<button_chars name="button_8">tuv8üû</button_chars>
    		<button_chars name="button_9">wxyz9</button_chars>
     </language>
-    <language name="עִבְרִית">
+    <language name="@string/lang_hebrew">
     	<icon_file_name>lang_icon_iz</icon_file_name>
     	<button_chars name="button_0"> 0_-+</button_chars>
     	<button_chars name="button_1">.,1?!@#$%^&amp;*/:;\'"=()[]</button_chars>

@@ -1,13 +1,15 @@
-package com.daicon.griever.gaijinkeitaiboard;
+package com.daicon.griever.gaijinkeitaikeyboard;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.text.method.MultiTapKeyListener;
 import android.util.Xml;
 import android.view.KeyCharacterMap;
@@ -15,6 +17,9 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import org.xmlpull.v1.XmlPullParser;
+
+import com.daicon.griever.gaijinkeitaikeyboard.R;
+
 
 
 public class GaijinKeitaiKeyboard extends InputMethodService {
@@ -32,14 +37,11 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     
     private Handler mHandler;
     
+    SharedPreferences sharedPref;
+    
     private class LanguageData {
     	public ArrayList<String> Characters;
     	public int IconIdResource;
-    	public LanguageData(ArrayList<String> chars, int IconID)
-    	{
-    		Characters = chars;
-    		IconIdResource = IconID;
-    	}
     	public LanguageData()
     	{
     		Characters = new ArrayList<String>();
@@ -59,7 +61,14 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         android.os.Debug.waitForDebugger();  // DEBUG MODE
         mWordSeparators = getResources().getString(R.string.word_separators);
         mHandler = new Handler();
+    	sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         fillLanguageData();
+    }
+    
+    /** @see android.inputmethodservice.InputMethodService#hideWindow */
+    @Override public void hideWindow() {
+        super.hideWindow();
+        hideStatusIcon();
     }
     
     private void setLanguage(int language_code) {
@@ -90,6 +99,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     {
         XmlPullParser parser = Xml.newPullParser();
         allLanguages = new ArrayList<LanguageData>();
+        boolean SkipCurrentLanguage = false;
         try {
         	Resources res = this.getResources();
         	parser = res.getXml(R.xml.languages);
@@ -104,19 +114,27 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                         name = parser.getName();
                         if (name.equals("language"))
                         {
-                        	allLanguages.add(new LanguageData());
+                            String lang_name = parser.getAttributeValue(null, "name");
+                            lang_name = lang_name.substring(lang_name.lastIndexOf("/") + 1);
+                            int lang_name_resId = getResources().getIdentifier(lang_name, "string", this.getPackageName());
+                            lang_name = getResources().getString(lang_name_resId);
+                            SkipCurrentLanguage = !sharedPref.getBoolean(lang_name, false);
+                            if (!SkipCurrentLanguage)
+                            	allLanguages.add(new LanguageData());
                         }
-                        if (name.equals("icon_file_name"))
-                        {	
-                        	parser.next(); //switch to text inside tag
-                        	allLanguages.get(allLanguages.size()-1).IconIdResource = this.getResources().getIdentifier(parser.getText(), "drawable", this.getPackageName());
-                        }
-                        if (name.contains("button_"))
-                        {	
-                        	parser.next(); //switch to text inside tag
-                        	allLanguages.get(allLanguages.size()-1).Characters.add(parser.getText());
-                        }
-                        //String xx = parser.getAttributeValue(null, "name");
+                    	if (!SkipCurrentLanguage){
+	                        if (name.equals("icon_file_name"))
+	                        {	
+	                        	parser.next(); //switch to text inside tag
+	                        	allLanguages.get(allLanguages.size()-1).IconIdResource = this.getResources().getIdentifier(parser.getText(), "drawable", this.getPackageName());
+	                        }
+	                        if (name.contains("button_"))
+	                        {	
+	                        	parser.next(); //switch to text inside tag
+	                        	allLanguages.get(allLanguages.size()-1).Characters.add(parser.getText());
+	                        }
+                    	}
+                        //
                         break;
                     case XmlPullParser.TEXT:
                     	break;
@@ -164,24 +182,21 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         switch (attribute.inputType&EditorInfo.TYPE_MASK_CLASS) {
             case EditorInfo.TYPE_CLASS_NUMBER:
             case EditorInfo.TYPE_CLASS_DATETIME:
+            	setLanguage(current_lang_index);
                 // Numbers and dates default to the symbols keyboard, with
                 // no extra features.
                 //mCurKeyboard = mSymbolsKeyboard;
                 break;
                 
             case EditorInfo.TYPE_CLASS_PHONE:
+  
                 // Phones will also default to the symbols keyboard, though
                 // often you will want to have a dedicated phone keyboard.
                 //mCurKeyboard = mSymbolsKeyboard;
                 break;
                 
             case EditorInfo.TYPE_CLASS_TEXT:
-                // This is general text editing.  We will default to the
-                // normal alphabetic keyboard, and assume that we should
-                // be doing predictive text (showing candidates as the
-                // user types).
-                //mCurKeyboard = mQwertyKeyboard;
-                //mPredictionOn = true;
+            	setLanguage(current_lang_index);
                 
                 // We now look for a few special variations of text that will
                 // modify our behavior.
@@ -223,8 +238,8 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                 //mCurKeyboard = mQwertyKeyboard;
                 updateShiftKeyState(attribute);
         }
+      	setLanguage(current_lang_index);
         
-        setLanguage(current_lang_index);
         
         //---get the notification ID for the notification; 
         // passed in by the MainActivity---
@@ -255,13 +270,14 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         //mCurKeyboard.setImeOptions(getResources(), attribute.imeOptions);
     }
 
-    /**
-     * This is called when the user is done editing a field.  We can use
-     * this to reset our state.
-     */
     @Override public void onFinishInput() {
         super.onFinishInput();
-        this.hideStatusIcon();
+        hideStatusIcon();
+    }
+    
+    @Override public void onUnbindInput() {
+	    super.onUnbindInput();
+	    hideStatusIcon();
     }
     
     //@Override public void onStartInputView(EditorInfo attribute, boolean restarting) {
@@ -318,25 +334,23 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
 	        case KeyEvent.KEYCODE_7:
 	        case KeyEvent.KEYCODE_8:
 	        case KeyEvent.KEYCODE_9: //16
-	        //case KeyEvent.KEYCODE_STAR: //17
-	        case KeyEvent.KEYCODE_POUND: //18
 	        	mHandler.removeCallbacks(postEditedCharacter);
-
 	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0) && (lastKeyCode != 17)) //if edit in progress, but new key is pressed
 	        	{ 
 	        		//post previous char
 	            	getCurrentInputConnection().finishComposingText();
 	            	currentKeyCharIndex = 0;
 	        	}
-	        	
 	        	//delayed post of current char
         		getCurrentInputConnection().setComposingText(String.valueOf(current_lang_chars[keyCode-7][currentKeyCharIndex]), 1);
-	            mHandler.postDelayed(postEditedCharacter, 700);
+	            mHandler.postDelayed(postEditedCharacter, sharedPref.getInt("textComposingDelay", 700));
 	            
 	            //currentKeyCharIndex++
 	            currentKeyCharIndex = (currentKeyCharIndex + 1) % current_lang_chars[keyCode-7].length;
             	lastKeyCode = keyCode;
 
+	        	return true;
+	        case KeyEvent.KEYCODE_POUND: //18
 	        	return true;
 	        case KeyEvent.KEYCODE_STAR: //17
 	        	mHandler.removeCallbacks(postEditedCharacter);
@@ -368,10 +382,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
      * InputConnection.   */
     private boolean translateKeyDown(int keyCode, KeyEvent event) {
     	mMetaState = MultiTapKeyListener.handleKeyDown(mMetaState,keyCode, event);
-    	if (event.getRepeatCount() > 2)
-    	{
-    	int xxx = 666;
-    	}
+
     	int c = event.getUnicodeChar(MultiTapKeyListener.getMetaState(mMetaState)); //0 if inactive, 1 if active, 2 if locked.
         mMetaState = MultiTapKeyListener.adjustMetaAfterKeypress(mMetaState);
         
@@ -381,22 +392,6 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
             return false;
         }
         
-        boolean dead = false;
-        //dead key check
-        if ((c & KeyCharacterMap.COMBINING_ACCENT) != 0) {
-            dead = true;
-            c = c & KeyCharacterMap.COMBINING_ACCENT_MASK;
-        }
-        
-        /*if (mComposing.length() > 0) {
-            char accent = mComposing.charAt(mComposing.length() -1 );
-            int composed = KeyEvent.getDeadChar(accent, c);
-
-            if (composed != 0) {
-                c = composed;
-                mComposing.setLength(mComposing.length()-1);
-            }
-        }*/
         onKey(c, null);
         return true;
     }

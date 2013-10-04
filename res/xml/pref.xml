@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen	xmlns:android="http://schemas.android.com/apk/res/android"
+    				xmlns:example="http://schemas.android.com/apk/res/com.daicon.griever.gaijinkeitaikeyboard">
+   <PreferenceScreen
+               android:key="inputLanguagesScreen"
+               android:title="Input Languages"
+               android:summary="Select input languages set">
+               <CheckBoxPreference android:key="@string/lang_english" android:title="@string/lang_english" android:defaultValue="true"/>
+               <CheckBoxPreference android:key="@string/lang_russian" android:title="@string/lang_russian" />
+               <CheckBoxPreference android:key="@string/lang_german" android:title="@string/lang_german" />
+               <CheckBoxPreference android:key="@string/lang_french" android:title="@string/lang_french" />
+               <CheckBoxPreference android:key="@string/lang_italian" android:title="@string/lang_italian" />
+               <CheckBoxPreference android:key="@string/lang_spanish" android:title="@string/lang_spanish" />
+               <CheckBoxPreference android:key="@string/lang_portuguese" android:title="@string/lang_portuguese" />
+               <CheckBoxPreference android:key="@string/lang_dutch" android:title="@string/lang_dutch" />
+               <CheckBoxPreference android:key="@string/lang_danish" android:title="@string/lang_danish" />
+               <CheckBoxPreference android:key="@string/lang_norwegian" android:title="@string/lang_norwegian" />
+               <CheckBoxPreference android:key="@string/lang_swedish" android:title="@string/lang_swedish" />
+               <CheckBoxPreference android:key="@string/lang_finnish" android:title="@string/lang_finnish" />
+               <CheckBoxPreference android:key="@string/lang_greek" android:title="@string/lang_greek" />
+               <CheckBoxPreference android:key="@string/lang_ukrainian" android:title="@string/lang_ukrainian" />
+               <CheckBoxPreference android:key="@string/lang_belarusian" android:title="@string/lang_belarusian" />
+               <CheckBoxPreference android:key="@string/lang_bulgarian" android:title="@string/lang_bulgarian" />
+               <CheckBoxPreference android:key="@string/lang_serbian" android:title="@string/lang_serbian" />
+               <CheckBoxPreference android:key="@string/lang_makedonian" android:title="@string/lang_makedonian" />
+               <CheckBoxPreference android:key="@string/lang_romanian" android:title="@string/lang_romanian" />
+               <CheckBoxPreference android:key="@string/lang_polish" android:title="@string/lang_polish" />
+               <CheckBoxPreference android:key="@string/lang_czech" android:title="@string/lang_czech" />
+               <CheckBoxPreference android:key="@string/lang_hungarian" android:title="@string/lang_hungarian" />
+               <CheckBoxPreference android:key="@string/lang_turkish" android:title="@string/lang_turkish" />
+               <CheckBoxPreference android:key="@string/lang_hebrew" android:title="@string/lang_hebrew" />
+    </PreferenceScreen>
+	<com.daicon.griever.gaijinkeitaikeyboard.SeekBarPreference
+        android:key="textComposingDelay"
+        android:title="Text Composing Delay (ms)"
+        android:summary="Multi-tap input delay in milliseconds"
+        android:dialogTitle="Text Composing Delay (ms)"
+        android:persistent="true"
+        android:defaultValue="700"
+        example:minValue="300"
+        example:maxValue="1500" />
+</PreferenceScreen>

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" 
-        package="com.daicon.griever.gaijinkeitaiboard" android:minSdkVersion="8"
+        package="com.daicon.griever.gaijinkeitaikeyboard" android:minSdkVersion="8"
         android:versionCode="1" android:versionName="0.1.0.0"> 
     <application android:label="@string/ime_name">
         <service android:name="GaijinKeitaiKeyboard"
@@ -9,5 +9,11 @@
             </intent-filter>
             <meta-data android:name="android.view.im" android:resource="@xml/method" />
         </service>
+		<activity android:name="com.daicon.griever.gaijinkeitaikeyboard.ImeSettingsActivity" android:label="@string/gkk_settings">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
     </application>
+    <uses-sdk android:targetSdkVersion="8" android:minSdkVersion="3" />
 </manifest>

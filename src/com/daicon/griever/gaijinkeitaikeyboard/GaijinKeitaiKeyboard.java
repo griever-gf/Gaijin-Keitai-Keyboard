@@ -37,7 +37,11 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     
     private Handler mHandler;
     
-    SharedPreferences sharedPref;
+    private SharedPreferences sharedPref;
+    
+    private boolean CapsLock;
+    
+    private boolean shortPress = false;
     
     private class LanguageData {
     	public ArrayList<String> Characters;
@@ -63,6 +67,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         mHandler = new Handler();
     	sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         fillLanguageData();
+        CapsLock = false;
     }
     
     /** @see android.inputmethodservice.InputMethodService#hideWindow */
@@ -189,13 +194,14 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                 break;
                 
             case EditorInfo.TYPE_CLASS_PHONE:
-  
+            	setLanguage(current_lang_index);
                 // Phones will also default to the symbols keyboard, though
                 // often you will want to have a dedicated phone keyboard.
                 //mCurKeyboard = mSymbolsKeyboard;
                 break;
                 
             case EditorInfo.TYPE_CLASS_TEXT:
+            //case EditorInfo.TYPE_TEXT_VARIATION_PASSWORD:
             	setLanguage(current_lang_index);
                 
                 // We now look for a few special variations of text that will
@@ -238,7 +244,6 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
                 //mCurKeyboard = mQwertyKeyboard;
                 updateShiftKeyState(attribute);
         }
-      	setLanguage(current_lang_index);
         
         
         //---get the notification ID for the notification; 
@@ -335,14 +340,17 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
 	        case KeyEvent.KEYCODE_8:
 	        case KeyEvent.KEYCODE_9: //16
 	        	mHandler.removeCallbacks(postEditedCharacter);
-	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0) && (lastKeyCode != 17)) //if edit in progress, but new key is pressed
+	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0)) //if edit in progress, but new key is pressed
 	        	{ 
 	        		//post previous char
 	            	getCurrentInputConnection().finishComposingText();
 	            	currentKeyCharIndex = 0;
 	        	}
 	        	//delayed post of current char
-        		getCurrentInputConnection().setComposingText(String.valueOf(current_lang_chars[keyCode-7][currentKeyCharIndex]), 1);
+	        	if (CapsLock)
+	        		getCurrentInputConnection().setComposingText(String.valueOf(Character.toUpperCase(current_lang_chars[keyCode-7][currentKeyCharIndex])), 1);
+	        	else
+	        		getCurrentInputConnection().setComposingText(String.valueOf(Character.toLowerCase(current_lang_chars[keyCode-7][currentKeyCharIndex])), 1);
 	            mHandler.postDelayed(postEditedCharacter, sharedPref.getInt("textComposingDelay", 700));
 	            
 	            //currentKeyCharIndex++
@@ -351,10 +359,23 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
 
 	        	return true;
 	        case KeyEvent.KEYCODE_POUND: //18
+	        	mHandler.removeCallbacks(postEditedCharacter);
+	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0)) //if edit in progress
+	        	{ 
+	        		//post previous char
+	            	getCurrentInputConnection().finishComposingText();
+	            	currentKeyCharIndex = 0;
+	        	}
+	        	if(event.getAction() == KeyEvent.ACTION_DOWN){
+	                event.startTracking();
+	                if(event.getRepeatCount() == 0){
+	                    shortPress = true;
+	                }
+	            }
 	        	return true;
 	        case KeyEvent.KEYCODE_STAR: //17
 	        	mHandler.removeCallbacks(postEditedCharacter);
-	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0) && (lastKeyCode != 17)) //if edit in progress
+	        	if ((keyCode != lastKeyCode) && (lastKeyCode != 0)) //if edit in progress
 	        	{ 
 	        		//post previous char
 	            	getCurrentInputConnection().finishComposingText();
@@ -362,8 +383,12 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
 	        	}
 	        	//getCurrentInputConnection().finishComposingText();
             	//currentKeyCharIndex = 0;
-	        	current_lang_index = (current_lang_index + 1) % allLanguages.size();
-	        	setLanguage(current_lang_index);
+	        	if(event.getAction() == KeyEvent.ACTION_DOWN){
+	                event.startTracking();
+	                if(event.getRepeatCount() == 0){
+	                    shortPress = true;
+	                }
+	            }
 	        	return true;
 	        default:
 	        	break;
@@ -372,11 +397,7 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
         return super.onKeyDown(keyCode, event);
     }
     
-    @Override public boolean onKeyLongPress(int keyCode, KeyEvent event)
-    {
-    	int i = keyCode;
-    	return super.onKeyLongPress(keyCode, event);
-    }
+
     /**
      * This translates incoming hard key events in to edit operations on an
      * InputConnection.   */
@@ -475,6 +496,21 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
             //}
         //}
     	//lastKeyCode = 0;
+    	if ((keyCode == KeyEvent.KEYCODE_STAR)||(keyCode == KeyEvent.KEYCODE_POUND)){
+            if(shortPress){ //short press processing
+            	if (keyCode == KeyEvent.KEYCODE_POUND){
+                    current_lang_index = (current_lang_index + 1) % allLanguages.size();
+    	        	setLanguage(current_lang_index);
+            	}
+            	else
+            		CapsLock = !CapsLock;
+            	}
+            } else {
+                //Don't handle longpress here, because the user will have to get his finger back up first
+            //}
+            shortPress = false;
+            return true;
+        }
         
         return super.onKeyUp(keyCode, event);
     }
@@ -482,14 +518,32 @@ public class GaijinKeitaiKeyboard extends InputMethodService {
     //this is should work for unicode keys, so basically unusable
     @Override public boolean onKeyMultiple(int keyCode, int count, KeyEvent event)
     {
-    	 android.os.Debug.waitForDebugger();  // DEBUG MODE
+    	 //android.os.Debug.waitForDebugger();  // DEBUG MODE
     	 int newKeyCode = keyCode;
          if ( (keyCode == KeyEvent.KEYCODE_BACK) )
          {
              newKeyCode = KeyEvent.KEYCODE_MEDIA_PREVIOUS;
-         }
+         }	 
         return super.onKeyMultiple(newKeyCode, count, event);
-    	//return super.onKeyMultiple(keyCode, count, event);
+    }
+    
+    @Override public boolean onKeyLongPress(int keyCode, KeyEvent event)
+    {
+    	if ((keyCode == KeyEvent.KEYCODE_STAR)||(keyCode == KeyEvent.KEYCODE_POUND)){
+            shortPress = false;
+
+           	 mHandler.removeCallbacks(postEditedCharacter);
+       		//post previous char
+           	getCurrentInputConnection().finishComposingText();
+           	currentKeyCharIndex = 0;
+   	        //delayed post of current char
+           	char unicodeChar = (char)event.getUnicodeChar();
+       		getCurrentInputConnection().setComposingText(String.valueOf(unicodeChar), 1);
+   	        mHandler.postDelayed(postEditedCharacter, sharedPref.getInt("textComposingDelay", 700));
+   	        lastKeyCode = keyCode;
+            return true;
+        }
+    	return false;
     }
     
 
